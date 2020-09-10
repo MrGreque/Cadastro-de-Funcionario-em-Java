@@ -5,6 +5,7 @@
  */
 package view;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 
@@ -41,12 +42,15 @@ public class Interface extends javax.swing.JFrame {
         jLbIconCargos = new javax.swing.JLabel();
         jLbCargos = new javax.swing.JLabel();
         jPanelRight = new javax.swing.JPanel();
+        jPanelFuncionarios = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanelTopBar.setBackground(new java.awt.Color(102, 0, 0));
+        jPanelTopBar.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelTopBar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLbExit.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -74,6 +78,7 @@ public class Interface extends javax.swing.JFrame {
         getContentPane().add(jPanelTopBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 870, 30));
 
         jPanelLeft.setBackground(new java.awt.Color(51, 51, 51));
+        jPanelLeft.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jPanelLeft.setForeground(new java.awt.Color(51, 51, 51));
         jPanelLeft.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -127,22 +132,43 @@ public class Interface extends javax.swing.JFrame {
 
         jPanelLeft.add(jBtCargos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 180, 60));
 
-        getContentPane().add(jPanelLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 530));
+        getContentPane().add(jPanelLeft, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 180, 500));
 
-        jPanelRight.setBackground(new java.awt.Color(218, 215, 215));
+        jPanelRight.setBackground(new java.awt.Color(204, 51, 0));
+        jPanelRight.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanelRight.setLayout(new java.awt.CardLayout());
 
-        javax.swing.GroupLayout jPanelRightLayout = new javax.swing.GroupLayout(jPanelRight);
-        jPanelRight.setLayout(jPanelRightLayout);
-        jPanelRightLayout.setHorizontalGroup(
-            jPanelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 690, Short.MAX_VALUE)
+        jPanelFuncionarios.setBackground(new java.awt.Color(204, 51, 0));
+
+        javax.swing.GroupLayout jPanelFuncionariosLayout = new javax.swing.GroupLayout(jPanelFuncionarios);
+        jPanelFuncionarios.setLayout(jPanelFuncionariosLayout);
+        jPanelFuncionariosLayout.setHorizontalGroup(
+            jPanelFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 688, Short.MAX_VALUE)
         );
-        jPanelRightLayout.setVerticalGroup(
-            jPanelRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+        jPanelFuncionariosLayout.setVerticalGroup(
+            jPanelFuncionariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 498, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPanelRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 690, 530));
+        jPanelRight.add(jPanelFuncionarios, "TelaFuncionario");
+
+        jPanel1.setBackground(new java.awt.Color(255, 204, 0));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 688, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 498, Short.MAX_VALUE)
+        );
+
+        jPanelRight.add(jPanel1, "TelaCargos");
+
+        getContentPane().add(jPanelRight, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 690, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -158,11 +184,15 @@ public class Interface extends javax.swing.JFrame {
     }//GEN-LAST:event_jLbCargosMouseExited
 
     private void jLbCargosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbCargosMouseClicked
-        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) jPanelRight.getLayout();
+        cl.show(jPanelRight, "TelaCargos");
+        jPanelRight.setBackground(new Color(255,204,0));
     }//GEN-LAST:event_jLbCargosMouseClicked
 
     private void jLbGFuncMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFuncMouseClicked
-        // TODO add your handling code here:
+        CardLayout cl = (CardLayout) jPanelRight.getLayout();
+        cl.show(jPanelRight, "TelaFuncionario");
+        jPanelRight.setBackground(new Color(204,51,0));
     }//GEN-LAST:event_jLbGFuncMouseClicked
 
     private void jLbGFuncMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFuncMouseEntered
@@ -234,6 +264,8 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JLabel jLbGFunc;
     private javax.swing.JLabel jLbIconCargos;
     private javax.swing.JLabel jLbIconFunc;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelFuncionarios;
     private javax.swing.JPanel jPanelLeft;
     private javax.swing.JPanel jPanelRight;
     private javax.swing.JPanel jPanelTopBar;
