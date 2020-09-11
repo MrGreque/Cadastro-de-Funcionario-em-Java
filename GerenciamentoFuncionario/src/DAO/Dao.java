@@ -13,7 +13,7 @@ public class Dao {
     public Connection conecta(){
         try{
             
-            String url = "jdbc:postgresql://localhost:5432/biblioteca";
+            String url = "jdbc:postgresql://localhost:5432/Gerenciamento_Funcionarios";
             String usuario = "postgres";
             String senha = "IZAEL1602";
             

@@ -5,23 +5,81 @@
  */
 package view;
 
+import DAO.CargosDAO;
+import DAO.FuncionarioDAO;
+import classes.Cargo;
+import classes.Funcionario;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author izael
  */
 public class Interface extends javax.swing.JFrame {
-
+    
+    private String siglaExc;
     /**
      * Creates new form JFrameInicial
      */
     public Interface() {
         initComponents();
+        listarCargos();
+        listarFuncionarios();
+        setCBoxCargos();
     }
-
+    
+    public void setCBoxCargos(){
+        jCbCargo.removeAllItems();
+        jCbAltCargo.removeAllItems();
+        CargosDAO cgDAO = new CargosDAO();
+        List<Cargo> cargos = cgDAO.listarNmCargos();
+        int i = 0;
+        while(cargos.size() > i){
+            jCbCargo.addItem(String.valueOf(cargos.get(i).getNmCargo()));
+            jCbAltCargo.addItem(String.valueOf(cargos.get(i).getNmCargo()));
+            i++;
+        }
+    }
+    
+    public void listarFuncionarios(){
+        DefaultTableModel valor = (DefaultTableModel) jTableFuncionarios.getModel();
+        valor.getDataVector().removeAllElements();
+        FuncionarioDAO fcDAO = new FuncionarioDAO();
+        List<Funcionario> fc = fcDAO.listarFuncionarios();
+        int i = 0;
+        while(fc.size() > i){
+            valor.addRow(new Object[]{String.valueOf(fc.get(i).getId()), fc.get(i).getNome(), fc.get(i).getRg(),
+                fc.get(i).getCpf(), fc.get(i).getNmCargo()});
+            i++;
+        }
+    }
+    
+    public void listarCargos(){
+        DefaultTableModel valor = (DefaultTableModel) jTableCargos.getModel();
+        
+        valor.getDataVector().removeAllElements();
+        CargosDAO cgDAO = new CargosDAO();
+        
+        List<Cargo> cargos = cgDAO.listarCargos();
+        int i = 0;
+        while (cargos.size() > i){
+        
+            valor.addRow(new Object[]{cargos.get(i).getSigla(), cargos.get(i).getNmCargo(), 
+                String.valueOf(cargos.get(i).getSalario()), cargos.get(i).getDescricao()});
+            i++;
+            
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,27 +103,13 @@ public class Interface extends javax.swing.JFrame {
         jPanelRight = new javax.swing.JPanel();
         jPanelFuncionarios = new javax.swing.JPanel();
         jLbGFunc1 = new javax.swing.JLabel();
-        jLbGFunc2 = new javax.swing.JLabel();
-        jLbGFunc3 = new javax.swing.JLabel();
-        jLbGFunc4 = new javax.swing.JLabel();
-        jLbGFunc5 = new javax.swing.JLabel();
         jTxtRg = new javax.swing.JTextField();
         jTxtNome = new javax.swing.JTextField();
         jFormTxtCpf = new javax.swing.JFormattedTextField();
         jCbCargo = new javax.swing.JComboBox<>();
         jLbGFunc6 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLbGFunc7 = new javax.swing.JLabel();
-        jRbCpf = new javax.swing.JRadioButton();
-        jRbNome = new javax.swing.JRadioButton();
-        jTxtPesquisa = new javax.swing.JTextField();
-        jBtPesquisa = new javax.swing.JButton();
-        jLbGFunc8 = new javax.swing.JLabel();
-        jLbGFunc9 = new javax.swing.JLabel();
-        jLbGFunc10 = new javax.swing.JLabel();
-        jLbGFunc11 = new javax.swing.JLabel();
-        jLbGFunc12 = new javax.swing.JLabel();
+        jTableFuncionarios = new javax.swing.JTable();
         jTxtAltRg = new javax.swing.JTextField();
         jTxtAltId = new javax.swing.JTextField();
         jTxtAltNome = new javax.swing.JTextField();
@@ -74,6 +118,15 @@ public class Interface extends javax.swing.JFrame {
         jBtCadastrar = new javax.swing.JButton();
         jBtExcluir = new javax.swing.JButton();
         jBtAlterar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jPanelCargos = new javax.swing.JPanel();
         JLbCg = new javax.swing.JLabel();
         jLbCg2 = new javax.swing.JLabel();
@@ -82,23 +135,24 @@ public class Interface extends javax.swing.JFrame {
         jLbCg5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTxtAltDescricao = new javax.swing.JTextArea();
-        jTtxSigla = new javax.swing.JTextField();
+        jTxtSigla = new javax.swing.JTextField();
         jTxtSalario = new javax.swing.JTextField();
         jLbCg6 = new javax.swing.JLabel();
-        jTxtCargo1 = new javax.swing.JTextField();
+        jTxtCargo = new javax.swing.JTextField();
         JLbCg1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jBtExcCargo = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableCargos = new javax.swing.JTable();
         jLbCg7 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTxtDescricao = new javax.swing.JTextArea();
         jLbCg8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTxtAltSalario = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jBtCadCargo = new javax.swing.JButton();
+        jBtAltCargo = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -213,73 +267,6 @@ public class Interface extends javax.swing.JFrame {
         });
         jPanelFuncionarios.add(jLbGFunc1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 280, 30));
 
-        jLbGFunc2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc2.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc2.setText("ID:");
-        jLbGFunc2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc2MouseExited(evt);
-            }
-        });
-        jPanelFuncionarios.add(jLbGFunc2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 70, 20));
-
-        jLbGFunc3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc3.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLbGFunc3.setText("Pesquisar:");
-        jLbGFunc3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc3MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc3MouseExited(evt);
-            }
-        });
-        jPanelFuncionarios.add(jLbGFunc3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 90, 20));
-
-        jLbGFunc4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc4.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLbGFunc4.setText("CPF:");
-        jLbGFunc4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc4MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc4MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc4MouseExited(evt);
-            }
-        });
-        jPanelFuncionarios.add(jLbGFunc4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 70, 20));
-
-        jLbGFunc5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc5.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLbGFunc5.setText("Cargo:");
-        jLbGFunc5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc5MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc5MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc5MouseExited(evt);
-            }
-        });
-        jPanelFuncionarios.add(jLbGFunc5, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 70, 20));
-
         jTxtRg.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanelFuncionarios.add(jTxtRg, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 210, -1));
 
@@ -315,142 +302,36 @@ public class Interface extends javax.swing.JFrame {
         });
         jPanelFuncionarios.add(jLbGFunc6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 250, 30));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableFuncionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Nome", "RG", "CPF", "Cargo"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
 
-        jPanelFuncionarios.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 620, 140));
-
-        jLbGFunc7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc7.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLbGFunc7.setText("RG:");
-        jLbGFunc7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc7MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc7MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc7MouseExited(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
-        jPanelFuncionarios.add(jLbGFunc7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 50, 20));
-
-        jRbCpf.setBackground(new java.awt.Color(230, 230, 230));
-        buttonGroup1.add(jRbCpf);
-        jRbCpf.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRbCpf.setText("CPF");
-        jPanelFuncionarios.add(jRbCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, -1, -1));
-
-        jRbNome.setBackground(new java.awt.Color(230, 230, 230));
-        buttonGroup1.add(jRbNome);
-        jRbNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jRbNome.setText("Nome");
-        jPanelFuncionarios.add(jRbNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
-
-        jTxtPesquisa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTxtPesquisa.setText("jTextField1");
-        jPanelFuncionarios.add(jTxtPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 150, -1));
-
-        jBtPesquisa.setBackground(new java.awt.Color(153, 0, 0));
-        jBtPesquisa.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jBtPesquisa.setForeground(new java.awt.Color(255, 255, 255));
-        jBtPesquisa.setText("Pesquisar");
-        jPanelFuncionarios.add(jBtPesquisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, -1, -1));
-
-        jLbGFunc8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc8.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLbGFunc8.setText("Nome:");
-        jLbGFunc8.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableFuncionarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc8MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc8MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc8MouseExited(evt);
+                jTableFuncionariosMouseClicked(evt);
             }
         });
-        jPanelFuncionarios.add(jLbGFunc8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 70, 20));
+        jScrollPane1.setViewportView(jTableFuncionarios);
 
-        jLbGFunc9.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc9.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc9.setText("Nome:");
-        jLbGFunc9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc9MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc9MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc9MouseExited(evt);
-            }
-        });
-        jPanelFuncionarios.add(jLbGFunc9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 70, 20));
-
-        jLbGFunc10.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc10.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc10.setText("RG:");
-        jLbGFunc10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc10MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc10MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc10MouseExited(evt);
-            }
-        });
-        jPanelFuncionarios.add(jLbGFunc10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 70, 20));
-
-        jLbGFunc11.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc11.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc11.setText("CPF:");
-        jLbGFunc11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc11MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc11MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc11MouseExited(evt);
-            }
-        });
-        jPanelFuncionarios.add(jLbGFunc11, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, 70, 20));
-
-        jLbGFunc12.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLbGFunc12.setForeground(new java.awt.Color(51, 51, 51));
-        jLbGFunc12.setText("Cargo:");
-        jLbGFunc12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLbGFunc12MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLbGFunc12MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLbGFunc12MouseExited(evt);
-            }
-        });
-        jPanelFuncionarios.add(jLbGFunc12, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 400, 70, 20));
+        jPanelFuncionarios.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 620, 170));
 
         jTxtAltRg.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTxtAltRg.setEnabled(false);
         jTxtAltRg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTxtAltRgActionPerformed(evt);
@@ -459,35 +340,90 @@ public class Interface extends javax.swing.JFrame {
         jPanelFuncionarios.add(jTxtAltRg, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 210, -1));
 
         jTxtAltId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTxtAltId.setEnabled(false);
         jPanelFuncionarios.add(jTxtAltId, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 430, 100, -1));
 
         jTxtAltNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTxtAltNome.setEnabled(false);
         jPanelFuncionarios.add(jTxtAltNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 210, -1));
 
+        jFormTxtAltCpf.setEnabled(false);
         jFormTxtAltCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanelFuncionarios.add(jFormTxtAltCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 200, -1));
 
         jCbAltCargo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jCbAltCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCbAltCargo.setEnabled(false);
         jPanelFuncionarios.add(jCbAltCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, 200, -1));
 
         jBtCadastrar.setBackground(new java.awt.Color(153, 0, 0));
         jBtCadastrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jBtCadastrar.setForeground(new java.awt.Color(255, 255, 255));
         jBtCadastrar.setText("Cadastrar");
+        jBtCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtCadastrarActionPerformed(evt);
+            }
+        });
         jPanelFuncionarios.add(jBtCadastrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 110, 110, 30));
 
         jBtExcluir.setBackground(new java.awt.Color(153, 0, 0));
         jBtExcluir.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jBtExcluir.setForeground(new java.awt.Color(255, 255, 255));
         jBtExcluir.setText("Excluir");
+        jBtExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtExcluirActionPerformed(evt);
+            }
+        });
         jPanelFuncionarios.add(jBtExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 440, 90, -1));
 
         jBtAlterar.setBackground(new java.awt.Color(153, 0, 0));
         jBtAlterar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jBtAlterar.setForeground(new java.awt.Color(255, 255, 255));
         jBtAlterar.setText("Alterar");
+        jBtAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtAlterarActionPerformed(evt);
+            }
+        });
         jPanelFuncionarios.add(jBtAlterar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 440, 90, 30));
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel5.setText("Cargo:");
+        jPanelFuncionarios.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 400, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel6.setText("Nome:");
+        jPanelFuncionarios.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, -1, -1));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel7.setText("RG:");
+        jPanelFuncionarios.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 80, -1, -1));
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel8.setText("CPF:");
+        jPanelFuncionarios.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel9.setText("Cargo:");
+        jPanelFuncionarios.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, -1, -1));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel10.setText("Nome:");
+        jPanelFuncionarios.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel11.setText("RG:");
+        jPanelFuncionarios.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, -1, -1));
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel12.setText("ID:");
+        jPanelFuncionarios.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabel13.setText("CPF:");
+        jPanelFuncionarios.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 370, -1, -1));
 
         jPanelRight.add(jPanelFuncionarios, "TelaFuncionario");
 
@@ -517,12 +453,13 @@ public class Interface extends javax.swing.JFrame {
         jTxtAltDescricao.setColumns(20);
         jTxtAltDescricao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtAltDescricao.setRows(5);
+        jTxtAltDescricao.setEnabled(false);
         jScrollPane2.setViewportView(jTxtAltDescricao);
 
         jPanelCargos.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 400, 260, 70));
 
-        jTtxSigla.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanelCargos.add(jTtxSigla, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 170, -1));
+        jTxtSigla.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanelCargos.add(jTxtSigla, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 170, -1));
 
         jTxtSalario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jPanelCargos.add(jTxtSalario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 140, -1));
@@ -531,23 +468,29 @@ public class Interface extends javax.swing.JFrame {
         jLbCg6.setText("Salário:");
         jPanelCargos.add(jLbCg6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, -1));
 
-        jTxtCargo1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jPanelCargos.add(jTxtCargo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 170, -1));
+        jTxtCargo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jPanelCargos.add(jTxtCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 170, -1));
 
         JLbCg1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         JLbCg1.setText("Cadastro de Cargo");
         jPanelCargos.add(JLbCg1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(153, 0, 0));
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Excluir");
-        jPanelCargos.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 440, -1, -1));
+        jBtExcCargo.setBackground(new java.awt.Color(153, 0, 0));
+        jBtExcCargo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jBtExcCargo.setForeground(new java.awt.Color(255, 255, 255));
+        jBtExcCargo.setText("Excluir");
+        jBtExcCargo.setEnabled(false);
+        jBtExcCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtExcCargoActionPerformed(evt);
+            }
+        });
+        jPanelCargos.add(jBtExcCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 440, -1, -1));
 
-        jLabel2.setText("*Só é possível alterar a descrição e o salário, caso contrário, apenas exclusão.");
-        jPanelCargos.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
+        jLabel2.setText("* Para centavos, colocar '.'");
+        jPanelCargos.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, -1, -1));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCargos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -555,10 +498,23 @@ public class Interface extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Sigla", "Cargo", "Salario", "Descricao"
             }
-        ));
-        jScrollPane3.setViewportView(jTable2);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableCargos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCargosMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTableCargos);
 
         jPanelCargos.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 620, 140));
 
@@ -582,19 +538,34 @@ public class Interface extends javax.swing.JFrame {
         jPanelCargos.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, -1, -1));
 
         jTxtAltSalario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTxtAltSalario.setEnabled(false);
         jPanelCargos.add(jTxtAltSalario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, 170, -1));
 
-        jButton2.setBackground(new java.awt.Color(153, 0, 0));
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cadastrar");
-        jPanelCargos.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, -1, -1));
+        jBtCadCargo.setBackground(new java.awt.Color(153, 0, 0));
+        jBtCadCargo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jBtCadCargo.setForeground(new java.awt.Color(255, 255, 255));
+        jBtCadCargo.setText("Cadastrar");
+        jBtCadCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtCadCargoActionPerformed(evt);
+            }
+        });
+        jPanelCargos.add(jBtCadCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, -1, -1));
 
-        jButton3.setBackground(new java.awt.Color(153, 0, 0));
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Alterar");
-        jPanelCargos.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, -1, -1));
+        jBtAltCargo.setBackground(new java.awt.Color(153, 0, 0));
+        jBtAltCargo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jBtAltCargo.setForeground(new java.awt.Color(255, 255, 255));
+        jBtAltCargo.setText("Alterar");
+        jBtAltCargo.setEnabled(false);
+        jBtAltCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtAltCargoActionPerformed(evt);
+            }
+        });
+        jPanelCargos.add(jBtAltCargo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 440, -1, -1));
+
+        jLabel4.setText("* Só é possível alterar a descrição e o salário, caso contrário, apenas exclusão.");
+        jPanelCargos.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
 
         jPanelRight.add(jPanelCargos, "TelaCargos");
 
@@ -659,54 +630,6 @@ public class Interface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLbGFunc1MouseExited
 
-    private void jLbGFunc2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc2MouseClicked
-
-    private void jLbGFunc2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc2MouseEntered
-
-    private void jLbGFunc2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc2MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc2MouseExited
-
-    private void jLbGFunc3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc3MouseClicked
-
-    private void jLbGFunc3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc3MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc3MouseEntered
-
-    private void jLbGFunc3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc3MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc3MouseExited
-
-    private void jLbGFunc4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc4MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc4MouseClicked
-
-    private void jLbGFunc4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc4MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc4MouseEntered
-
-    private void jLbGFunc4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc4MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc4MouseExited
-
-    private void jLbGFunc5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc5MouseClicked
-
-    private void jLbGFunc5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc5MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc5MouseEntered
-
-    private void jLbGFunc5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc5MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc5MouseExited
-
     private void jLbGFunc6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc6MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLbGFunc6MouseClicked
@@ -719,81 +642,168 @@ public class Interface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLbGFunc6MouseExited
 
-    private void jLbGFunc7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc7MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc7MouseClicked
-
-    private void jLbGFunc7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc7MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc7MouseEntered
-
-    private void jLbGFunc7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc7MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc7MouseExited
-
-    private void jLbGFunc8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc8MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc8MouseClicked
-
-    private void jLbGFunc8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc8MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc8MouseEntered
-
-    private void jLbGFunc8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc8MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc8MouseExited
-
-    private void jLbGFunc9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc9MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc9MouseClicked
-
-    private void jLbGFunc9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc9MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc9MouseEntered
-
-    private void jLbGFunc9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc9MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc9MouseExited
-
-    private void jLbGFunc10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc10MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc10MouseClicked
-
-    private void jLbGFunc10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc10MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc10MouseEntered
-
-    private void jLbGFunc10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc10MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc10MouseExited
-
-    private void jLbGFunc11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc11MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc11MouseClicked
-
-    private void jLbGFunc11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc11MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc11MouseEntered
-
-    private void jLbGFunc11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc11MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc11MouseExited
-
-    private void jLbGFunc12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc12MouseClicked
-
-    private void jLbGFunc12MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc12MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc12MouseEntered
-
-    private void jLbGFunc12MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLbGFunc12MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLbGFunc12MouseExited
-
     private void jTxtAltRgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtAltRgActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTxtAltRgActionPerformed
+
+    private void jBtCadCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtCadCargoActionPerformed
+        Cargo cg = new Cargo();
+        cg.setSigla(jTxtSigla.getText());
+        cg.setNmCargo(jTxtCargo.getText());
+        cg.setSalario(new BigDecimal(jTxtSalario.getText()));
+        cg.setDescricao(jTxtDescricao.getText());
+        CargosDAO cgDAO = new CargosDAO();
+        try {
+            cgDAO.cadastrarCargo(cg);
+            JOptionPane.showMessageDialog(null,"Cargo "+cg.getNmCargo()+" cadastrado com sucesso.");
+        } catch (SQLException ex) {
+            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        listarCargos();
+        jTxtSigla.setText("");
+        jTxtCargo.setText("");
+        jTxtSalario.setText("");
+        jTxtDescricao.setText("");
+    }//GEN-LAST:event_jBtCadCargoActionPerformed
+
+    private void jBtAltCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtAltCargoActionPerformed
+        Cargo cg = new Cargo();
+        cg.setSalario(new BigDecimal(jTxtAltSalario.getText()));
+        cg.setDescricao(jTxtAltDescricao.getText());
+        CargosDAO cgDAO = new CargosDAO();
+        cgDAO.alterarCargo(cg);
+        JOptionPane.showMessageDialog(null,"Cargo de sigla "+siglaExc+" alterado com sucesso.");
+        listarCargos();
+        jTxtAltSalario.setText("");
+        jTxtAltSalario.setEnabled(false);
+        jTxtAltDescricao.setText("");
+        jTxtAltDescricao.setEnabled(false);
+        jBtAltCargo.setEnabled(false);
+        jBtExcCargo.setEnabled(false);
+    }//GEN-LAST:event_jBtAltCargoActionPerformed
+
+    private void jBtExcCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtExcCargoActionPerformed
+        if(siglaExc != ""){
+            Cargo cg = new Cargo();
+            cg.setSigla(siglaExc);
+            CargosDAO cgDAO = new CargosDAO();
+            cgDAO.excluirCargo(cg);
+            JOptionPane.showMessageDialog(null, "Cargo de sigla "+siglaExc+" excluído com sucesso");
+            listarCargos();
+            this.siglaExc = "";
+        } else{
+            JOptionPane.showMessageDialog(null, "Selecione um cargo para excluir");
+        }
+        listarCargos();
+        jTxtAltSalario.setText("");
+        jTxtAltSalario.setEnabled(false);
+        jTxtAltDescricao.setText("");
+        jTxtAltDescricao.setEnabled(false);
+        jBtAltCargo.setEnabled(false);
+        jBtExcCargo.setEnabled(false);
+    }//GEN-LAST:event_jBtExcCargoActionPerformed
+
+    private void jTableCargosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCargosMouseClicked
+        this.siglaExc = (String) jTableCargos.getModel().getValueAt(jTableCargos.getSelectedRow(), 0);
+        jTxtAltSalario.setText((String) jTableCargos.getModel().getValueAt(jTableCargos.getSelectedRow(), 2));
+        jTxtAltDescricao.setText((String) jTableCargos.getModel().getValueAt(jTableCargos.getSelectedRow(), 3));
+        jTxtAltSalario.setEnabled(true);
+        jTxtAltDescricao.setEnabled(true);
+        jBtAltCargo.setEnabled(true);
+        jBtExcCargo.setEnabled(true);
+    }//GEN-LAST:event_jTableCargosMouseClicked
+
+    private void jBtCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtCadastrarActionPerformed
+        Funcionario fc = new Funcionario();
+        fc.setNome(jTxtNome.getText());
+        fc.setRg(jTxtRg.getText());
+        fc.setCpf(jFormTxtCpf.getText());
+        
+        CargosDAO cgDAO = new CargosDAO();
+        Cargo cg = new Cargo();
+        cg.setSigla(cgDAO.descCgForNm((String)jCbCargo.getSelectedItem()));
+        
+        FuncionarioDAO fcDAO = new FuncionarioDAO();
+        fcDAO.cadastroFunc(fc, cg);
+        
+        JOptionPane.showMessageDialog(null, "Funcionário "+fc.getNome()+" cadastrado com sucesso!");
+        listarFuncionarios();
+        
+        jTxtNome.setText("");
+        jTxtRg.setText("");
+        jFormTxtCpf.setText("");
+        int i = 0;
+        jCbCargo.setSelectedItem(jCbCargo.getItemAt(i));
+        
+    }//GEN-LAST:event_jBtCadastrarActionPerformed
+
+    private void jBtAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtAlterarActionPerformed
+        Funcionario fc = new Funcionario();
+        fc.setId(Integer.parseInt(jTxtAltId.getText()));
+        fc.setNome(jTxtAltNome.getText());
+        fc.setRg(jTxtAltRg.getText());
+        fc.setCpf(jFormTxtAltCpf.getText());
+        
+        CargosDAO cgDAO = new CargosDAO();
+        Cargo cg = new Cargo();
+        cg.setSigla(cgDAO.descCgForNm((String)jCbAltCargo.getSelectedItem()));
+        
+        FuncionarioDAO fcDAO = new FuncionarioDAO();
+        fcDAO.alterarFunc(fc, cg);
+        
+        JOptionPane.showMessageDialog(null, "Funcionário "+fc.getNome()+" alterado com sucesso!");
+        listarFuncionarios();
+        
+        jTxtAltNome.setText("");
+        jTxtAltNome.setEnabled(false);
+        jTxtAltRg.setText("");
+        jTxtAltRg.setEnabled(false);
+        jFormTxtAltCpf.setText("");
+        jFormTxtAltCpf.setEnabled(false);
+        jTxtAltId.setText("");
+        int i = 0;
+        jCbAltCargo.setSelectedItem(jCbAltCargo.getItemAt(i));
+        jCbAltCargo.setEnabled(false);
+        jBtAlterar.setEnabled(false);
+        jBtExcluir.setEnabled(false);
+    }//GEN-LAST:event_jBtAlterarActionPerformed
+
+    private void jTableFuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFuncionariosMouseClicked
+        jTxtAltId.setText((String) jTableFuncionarios.getModel().getValueAt(jTableFuncionarios.getSelectedRow(), 0));
+        jTxtAltNome.setEnabled(true);
+        jTxtAltNome.setText((String) jTableFuncionarios.getModel().getValueAt(jTableFuncionarios.getSelectedRow(), 1));
+        jTxtAltRg.setEnabled(true);
+        jTxtAltRg.setText((String) jTableFuncionarios.getModel().getValueAt(jTableFuncionarios.getSelectedRow(), 2));
+        jFormTxtAltCpf.setEnabled(true);
+        jFormTxtAltCpf.setText((String) jTableFuncionarios.getModel().getValueAt(jTableFuncionarios.getSelectedRow(), 3));
+        jCbAltCargo.setEnabled(true);
+        jBtAlterar.setEnabled(true);
+        jBtExcluir.setEnabled(true);
+    }//GEN-LAST:event_jTableFuncionariosMouseClicked
+
+    private void jBtExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtExcluirActionPerformed
+        Funcionario fc = new Funcionario();
+        fc.setId(Integer.parseInt(jTxtAltId.getText()));
+        
+        FuncionarioDAO fcDAO = new FuncionarioDAO();
+        fcDAO.excluirFunc(fc);
+        
+        JOptionPane.showMessageDialog(null, "Funcionário "+fc.getNome()+" excluído com sucesso!");
+        listarFuncionarios();
+        
+        jTxtAltNome.setText("");
+        jTxtAltNome.setEnabled(false);
+        jTxtAltRg.setText("");
+        jTxtAltRg.setEnabled(false);
+        jFormTxtAltCpf.setText("");
+        jFormTxtAltCpf.setEnabled(false);
+        jTxtAltId.setText("");
+        int i = 0;
+        jCbAltCargo.setSelectedItem(jCbAltCargo.getItemAt(i));
+        jCbAltCargo.setEnabled(false);
+        jBtAlterar.setEnabled(false);
+        jBtExcluir.setEnabled(false);
+    }//GEN-LAST:event_jBtExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -835,22 +845,31 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JLabel JLbCg;
     private javax.swing.JLabel JLbCg1;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jBtAltCargo;
     private javax.swing.JButton jBtAlterar;
+    private javax.swing.JButton jBtCadCargo;
     private javax.swing.JButton jBtCadastrar;
     private javax.swing.JPanel jBtCargos;
+    private javax.swing.JButton jBtExcCargo;
     private javax.swing.JButton jBtExcluir;
     private javax.swing.JPanel jBtFuncionarios;
-    private javax.swing.JButton jBtPesquisa;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jCbAltCargo;
     private javax.swing.JComboBox<String> jCbCargo;
     private javax.swing.JFormattedTextField jFormTxtAltCpf;
     private javax.swing.JFormattedTextField jFormTxtCpf;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLbCargos;
     private javax.swing.JLabel jLbCg2;
     private javax.swing.JLabel jLbCg3;
@@ -862,17 +881,7 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JLabel jLbExit;
     private javax.swing.JLabel jLbGFunc;
     private javax.swing.JLabel jLbGFunc1;
-    private javax.swing.JLabel jLbGFunc10;
-    private javax.swing.JLabel jLbGFunc11;
-    private javax.swing.JLabel jLbGFunc12;
-    private javax.swing.JLabel jLbGFunc2;
-    private javax.swing.JLabel jLbGFunc3;
-    private javax.swing.JLabel jLbGFunc4;
-    private javax.swing.JLabel jLbGFunc5;
     private javax.swing.JLabel jLbGFunc6;
-    private javax.swing.JLabel jLbGFunc7;
-    private javax.swing.JLabel jLbGFunc8;
-    private javax.swing.JLabel jLbGFunc9;
     private javax.swing.JLabel jLbIconCargos;
     private javax.swing.JLabel jLbIconFunc;
     private javax.swing.JPanel jPanelCargos;
@@ -880,25 +889,22 @@ public class Interface extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelLeft;
     private javax.swing.JPanel jPanelRight;
     private javax.swing.JPanel jPanelTopBar;
-    private javax.swing.JRadioButton jRbCpf;
-    private javax.swing.JRadioButton jRbNome;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTtxSigla;
+    private javax.swing.JTable jTableCargos;
+    private javax.swing.JTable jTableFuncionarios;
     private javax.swing.JTextArea jTxtAltDescricao;
     private javax.swing.JTextField jTxtAltId;
     private javax.swing.JTextField jTxtAltNome;
     private javax.swing.JTextField jTxtAltRg;
     private javax.swing.JTextField jTxtAltSalario;
-    private javax.swing.JTextField jTxtCargo1;
+    private javax.swing.JTextField jTxtCargo;
     private javax.swing.JTextArea jTxtDescricao;
     private javax.swing.JTextField jTxtNome;
-    private javax.swing.JTextField jTxtPesquisa;
     private javax.swing.JTextField jTxtRg;
     private javax.swing.JTextField jTxtSalario;
+    private javax.swing.JTextField jTxtSigla;
     // End of variables declaration//GEN-END:variables
 }
