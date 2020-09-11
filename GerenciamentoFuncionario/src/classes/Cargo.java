@@ -7,10 +7,19 @@ import java.math.BigDecimal;
  * @author gabriel
  */
 public class Cargo {
+    private String cargo;
     private String sigla;
     private String descricao;
     private BigDecimal salario;
 
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+    
     public String getSigla() {
         return sigla;
     }
