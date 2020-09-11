@@ -4,9 +4,9 @@ package classes;
  *
  * @author gabriel
  */
-public class Funcionario extends Cargo{
+public class Funcionario extends Pessoa{
     private int id;
-
+    
     public int getId() {
         return id;
     }

@@ -7,17 +7,17 @@ import java.math.BigDecimal;
  * @author gabriel
  */
 public class Cargo {
-    private String cargo;
+    private String nmCargo;
     private String sigla;
     private String descricao;
     private BigDecimal salario;
 
-    public String getCargo() {
-        return cargo;
+    public String getNmCargo() {
+        return nmCargo;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setNmCargo(String nmCargo) {
+        this.nmCargo = nmCargo;
     }
     
     public String getSigla() {
