@@ -1,0 +1,24 @@
+CREATE DATABASE "Gerenciamento_Funcionarios"
+TEMPLATE = template0
+ENCODING 'UTF-8'
+CONNECTION LIMIT = -1;
+
+CREATE TABLE Cargos(
+	sigla			VARCHAR(20),
+	nm_cargo		VARCHAR(30) CONSTRAINT nn_tb_cargos_nm_cargo NOT NULL,
+	salario			NUMERIC(7,2) CONSTRAINT nn_tb_cargos_salario NOT NULL,
+	descricao		VARCHAR(500) CONSTRAINT nn_tb_cargos_descricao NOT NULL,
+	status			VARCHAR(20) CONSTRAINT nn_tb_cargos_status NOT NULL,
+	CONSTRAINT pk_tb_cargos_sigla PRIMARY KEY (sigla)
+)
+
+CREATE TABLE Funcionarios(
+	id			SERIAL,
+	nome		VARCHAR(50) CONSTRAINT nn_tb_func_nome NOT NULL, 
+	rg			VARCHAR(20) CONSTRAINT nn_tb_func_rg NOT NULL,
+	cpf			VARCHAR(20) CONSTRAINT nn_tb_func_cpf NOT NULL,
+	status		VARCHAR(20) CONSTRAINT nn_tb_func_status NOT NULL,
+	s_cargo		VARCHAR(20),
+	CONSTRAINT pk_tb_func_id PRIMARY KEY (id),
+	CONSTRAINT fk_tb_func_cargo FOREIGN KEY(s_cargo) REFERENCES Cargos(sigla)
+)
