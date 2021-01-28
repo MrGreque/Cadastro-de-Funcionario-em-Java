@@ -5,9 +5,9 @@ CONNECTION LIMIT = -1;
 
 CREATE TABLE Cargos(
 	sigla			VARCHAR(20),
-	nm_cargo		VARCHAR(30) CONSTRAINT nn_tb_cargos_nm_cargo NOT NULL,
+	nm_cargo		VARCHAR(100) CONSTRAINT nn_tb_cargos_nm_cargo NOT NULL,
 	salario			NUMERIC(7,2) CONSTRAINT nn_tb_cargos_salario NOT NULL,
-	descricao		VARCHAR(500) CONSTRAINT nn_tb_cargos_descricao NOT NULL,
+	descricao		TEXT CONSTRAINT nn_tb_cargos_descricao NOT NULL,
 	status			VARCHAR(20) CONSTRAINT nn_tb_cargos_status NOT NULL,
 	CONSTRAINT pk_tb_cargos_sigla PRIMARY KEY (sigla)
 )
