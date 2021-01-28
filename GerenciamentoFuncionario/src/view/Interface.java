@@ -660,6 +660,7 @@ public class Interface extends javax.swing.JFrame {
             Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
         }
         listarCargos();
+        setCBoxCargos();
         jTxtSigla.setText("");
         jTxtCargo.setText("");
         jTxtSalario.setText("");
@@ -695,6 +696,7 @@ public class Interface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecione um cargo para excluir");
         }
         listarCargos();
+        setCBoxCargos();
         jTxtAltSalario.setText("");
         jTxtAltSalario.setEnabled(false);
         jTxtAltDescricao.setText("");
