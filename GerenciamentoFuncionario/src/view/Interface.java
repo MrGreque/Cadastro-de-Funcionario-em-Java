@@ -80,6 +80,18 @@ public class Interface extends javax.swing.JFrame {
         }
     }
     
+    public boolean validaCamposCadCargo(){
+        boolean notNull = true;
+        if(jTxtSigla.getText().equals("")){
+            notNull = false;
+        } else if(jTxtCargo.getText().equals("")){
+            notNull = false;
+        } else if(jTxtDescricao.getText().equals("")){
+            notNull = false;
+        }
+        return notNull;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -648,23 +660,33 @@ public class Interface extends javax.swing.JFrame {
 
     private void jBtCadCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtCadCargoActionPerformed
         Cargo cg = new Cargo();
-        cg.setSigla(jTxtSigla.getText());
-        cg.setNmCargo(jTxtCargo.getText());
-        cg.setSalario(new BigDecimal(jTxtSalario.getText()));
-        cg.setDescricao(jTxtDescricao.getText());
         CargosDAO cgDAO = new CargosDAO();
-        try {
-            cgDAO.cadastrarCargo(cg);
-            JOptionPane.showMessageDialog(null,"Cargo "+cg.getNmCargo()+" cadastrado com sucesso.");
-        } catch (SQLException ex) {
-            Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+        if(jTxtSalario.getText().equals("") || Integer.parseInt(jTxtSalario.getText()) < 0){
+            JOptionPane.showMessageDialog(null, "Defina um valor válido no campo SALÁRIO");
+        }else{
+            cg.setSigla(jTxtSigla.getText());
+            cg.setNmCargo(jTxtCargo.getText());
+            cg.setSalario(new BigDecimal(jTxtSalario.getText()));
+            cg.setDescricao(jTxtDescricao.getText());
+            if(validaCamposCadCargo() == true){
+                try {
+                    cgDAO.cadastrarCargo(cg);
+                    JOptionPane.showMessageDialog(null,"Cargo "+cg.getNmCargo()+" cadastrado com sucesso.");
+                } catch (SQLException ex) {
+                    //Logger.getLogger(Interface.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex);
+                }
+                listarCargos();
+                setCBoxCargos();
+                jTxtSigla.setText("");
+                jTxtCargo.setText("");
+                jTxtSalario.setText("");
+                jTxtDescricao.setText("");
+            } else{
+                JOptionPane.showMessageDialog(null, "Preencha todos os campos para prosseguir");
+            } 
         }
-        listarCargos();
-        setCBoxCargos();
-        jTxtSigla.setText("");
-        jTxtCargo.setText("");
-        jTxtSalario.setText("");
-        jTxtDescricao.setText("");
+        
     }//GEN-LAST:event_jBtCadCargoActionPerformed
 
     private void jBtAltCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtAltCargoActionPerformed

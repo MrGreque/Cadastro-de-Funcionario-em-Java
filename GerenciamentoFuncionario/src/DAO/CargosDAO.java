@@ -2,6 +2,7 @@ package DAO;
 
 import java.sql.Connection;
 import classes.Cargo;
+import java.math.BigDecimal;
 import java.util.List;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,6 @@ public class CargosDAO {
     
     public void cadastrarCargo(Cargo cg) throws SQLException{
         String sql = "INSERT INTO Cargos(sigla, nm_cargo, salario, descricao, status) VALUES (?,?,?,?,'Ativo')";
-        
         try{
             PreparedStatement stmt = conecta.prepareStatement(sql);
             stmt.setString(1, cg.getSigla());
@@ -32,7 +32,7 @@ public class CargosDAO {
             stmt.close();
         } catch(SQLException e){
             throw new RuntimeException(e);
-        }
+        }   
     }
     
     public void alterarCargo(Cargo cg){
